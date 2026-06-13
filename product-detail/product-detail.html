@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Furniture | Obsidian Corduroy Sectional</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="logo"><a href="../index.html"><img src="../assets/images/chair-logo.svg" alt="" class="logo-icon"><strong>Syntax Furniture</strong></a></div>
+        <div class="links">
+            <a href="../index.html">Home</a>
+            <a href="../products.html">Products</a>
+            <a href="../about.html">About</a>
+            <a href="../promotions.html">Promotions</a>
+            <a href="../contact.html" class="btn btn-outline">Contact Us</a>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../index.html">Home</a> / <a href="../products.html">Products</a> / Obsidian Corduroy Sectional
+    </div>
+
+    <div class="container">
+        <div class="product-detail-grid">
+            
+            <div class="product-detail-image">
+                <img src="../assets/images/sofa-2d.png" alt="Obsidian Black Corduroy L-Shaped Sectional Sofa">
+            </div>
+
+            <div class="product-detail-info">
+                <h1>Obsidian Corduroy Sectional</h1>
+                <p class="price">RM 1,899</p>
+                
+                <p class="desc">
+                    Anchor your living space with the Obsidian Corduroy Sectional. Featuring a spacious L-shaped silhouette with a right-facing chaise, this piece is wrapped in a rich, textured black corduroy fabric. Its low-profile modern design and plush, oversized cushions offer deep comfort while making a bold, sophisticated statement in any minimalist or contemporary room.
+                </p>
+
+                <ul class="spec-list">
+                    <li><span>Material</span> <span>Premium Ribbed Corduroy & Solid Pine</span></li>
+                    <li><span>Dimensions</span> <span>260cm (W) x 160cm (Chaise Depth) x 80cm (H)</span></li>
+                    <li><span>Color</span> <span>Obsidian Black</span></li>
+                </ul>
+
+                <div class="product-actions">
+                    <button id="openARModalBtn" class="btn btn-ar" style="width: 100%;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                        View in Your Space (AR)
+                    </button>
+
+                    <button id="open-cart-btn" class="btn-cart">
+                        Add to Cart - RM 1,899
+                    </button>
+                </div>
+                
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 15px; text-align: center;">
+                    <em>* Activating AR will play an audio guide.</em>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="arModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <h3>Preparing your AR Experience</h3>
+            <p style="color: var(--text-muted); margin-bottom: 15px;">Follow these quick steps to visualize this piece in your home:</p>
+            
+            <ol>
+                <li><strong>Get the Marker:</strong> Download the image below and print it out (or display it clearly on a secondary phone or tablet).</li>
+                <li><strong>Scan & Listen:</strong> Tap 'Open AR Space', allow camera access, and point your camera at the marker. Ensure your device sound is on for the audio guide.</li>
+                <li><strong>Position Perfectly:</strong> Once the model appears, you can adjust its placement:
+                    <ul style="list-style-type: circle; margin-top: 8px; margin-bottom: 0; padding-left: 20px; color: var(--text-muted); font-size: 0.9rem;">
+                        <li style="margin-bottom: 4px;"><strong>Mobile:</strong> Swipe to rotate, pinch to scale.</li>
+                        <li style="margin-bottom: 4px;"><strong>Desktop:</strong> Click and drag to rotate, scroll to scale.</li>
+                        <li><strong>UI Pad:</strong> Use the on-screen buttons to adjust at any time.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="modal-actions" style="margin-top: 25px;">
+                <a href="../assets/target/sofa.jpg" download="Syntax_Sofa_AR_Marker.png" class="btn btn-outline">
+                    Download Marker
+                </a>
+                <a href="../ar/ar-view.html" class="btn">
+                    Open AR Space
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="cartModal" class="cart-modal-overlay">
+        <div class="cart-modal-content">
+            <h3>Added to Cart!</h3>
+            <p>The Obsidian Corduroy Sectional has been successfully added to your shopping cart.</p>
+            <div class="cart-modal-actions">
+                <button id="close-cart-btn" class="btn-modal-primary">Done</button>
+                <a href="../products.html" class="btn-modal-secondary">Find other products</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // --- AR Modal Elements ---
+            const arModal = document.getElementById("arModal");
+            const openARBtn = document.getElementById("openARModalBtn");
+            const closeARBtn = document.getElementById("closeModalBtn");
+
+            // --- Cart Modal Elements ---
+            const cartModal = document.getElementById("cartModal");
+            const openCartBtn = document.getElementById("open-cart-btn");
+            const closeCartBtn = document.getElementById("close-cart-btn");
+
+            // --- AR Modal Events ---
+            openARBtn.addEventListener("click", function() {
+                arModal.style.display = "flex";
+            });
+
+            closeARBtn.addEventListener("click", function() {
+                arModal.style.display = "none";
+            });
+
+            // --- Cart Modal Events ---
+            openCartBtn.addEventListener("click", function() {
+                cartModal.style.display = "flex";
+            });
+
+            closeCartBtn.addEventListener("click", function() {
+                cartModal.style.display = "none";
+            });
+
+            // --- Global Click Event (Closes either modal if user clicks the dark background) ---
+            window.addEventListener("click", function(event) {
+                if (event.target === arModal) {
+                    arModal.style.display = "none";
+                }
+                if (event.target === cartModal) {
+                    cartModal.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax Furniture | Home</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav>
+        <div class="logo"><a href="index.html"><img src="assets/images/chair-logo.svg" alt="" class="logo-icon"><strong>Syntax Furniture</strong></a></div>
+        <div class="links">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="about.html">About</a>
+            <a href="promotions.html">Promotions</a>
+            <a href="contact.html" class="btn btn-outline">Contact Us</a>
+        </div>
+    </nav>
+
+    <div class="hero-container">
+        <div class="hero">
+            <h1>Find Your Perfect<br>Living Space</h1>
+            
+            <div class="search-bar">
+                <div class="search-field">
+                    <label>Looking for</label>
+                    <div class="custom-select-wrapper">
+                        <div class="custom-select">
+                            <div class="custom-select-trigger">What to look for?</div>
+                            <div class="custom-options">
+                                <span class="custom-option">Sofas</span>
+                                <span class="custom-option">Tables</span>
+                                <span class="custom-option">Chairs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-divider"></div>
+                
+                <div class="search-field">
+                    <label>Collection</label>
+                    <div class="custom-select-wrapper">
+                        <div class="custom-select">
+                            <div class="custom-select-trigger">Select collection</div>
+                            <div class="custom-options">
+                                <span class="custom-option">Summer 2026</span>
+                                <span class="custom-option">Minimalist Core</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-divider"></div>
+                
+                <div class="search-field">
+                    <label>Material</label>
+                    <div class="custom-select-wrapper">
+                        <div class="custom-select">
+                            <div class="custom-select-trigger">Select material</div>
+                            <div class="custom-options">
+                                <span class="custom-option">Wood</span>
+                                <span class="custom-option">Fabric</span>
+                                <span class="custom-option">Metal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn" id="home-search-btn">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container home-search-results" id="home-search-results" hidden>
+        <div class="filter-bar">
+            <p id="home-results-count" style="font-weight: 500; color: var(--text-muted);">Showing 0 results</p>
+        </div>
+        <div class="product-grid" id="home-product-grid"></div>
+        <p id="home-no-results" class="home-no-results" hidden>No products match your filters. Try adjusting your search.</p>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

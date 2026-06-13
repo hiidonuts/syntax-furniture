@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntax AR Space | Azure Velvet Lounge Chair</title>
+    
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+    <script>
+        // Custom component to handle Browser Text-to-Speech specifically for MindAR
+        AFRAME.registerComponent('mindar-audio-handler', {
+            init: function () {
+                const target = this.el;
+
+                const narrationText = "Welcome to the Azure Velvet Lounge Chair. Notice the elegant mid-century modern design featuring a classic tufted backrest and rich navy blue upholstery. Supported by sturdy angled black legs, it offers a perfect blend of plush comfort and sophisticated style. Walk around to see how it complements your space, and when you are ready, tap Add to Cart below to make it yours.";
+
+                target.addEventListener("targetFound", () => {
+                    console.log("MindAR Target Found! Starting voice narration...");
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(narrationText);
+                    utterance.lang = 'en-US'; 
+                    utterance.rate = 0.95;    
+                    utterance.pitch = 1.0;    
+                    window.speechSynthesis.speak(utterance);
+                });
+
+                target.addEventListener("targetLost", () => {
+                    console.log("MindAR Target Lost! Stopping voice.");
+                    window.speechSynthesis.cancel();
+                });
+            }
+        });
+    </script>
+</head>
+<body class="ar-body">
+
+    <div class="ui-layer top-nav">
+        <a href="../product-detail/product-detail-3.html" class="icon-btn clickable" title="Close AR Space">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </a>
+        
+        <div class="ar-title">Syntax AR Space</div>
+        
+        <button id="open-menu-btn" class="icon-btn clickable" title="More Products">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div id="side-menu" class="ui-layer side-menu">
+        <div class="menu-header">
+            <h3>Explore other product</h3>
+            <button id="close-menu-btn" class="close-menu-btn clickable">&times;</button>
+        </div>
+        
+        <a href="ar-view.html" class="menu-product clickable">
+            <img src="../assets/images/sofa-2d.png" alt="Obsidian Corduroy Sectional">
+            <div>
+                <h4>Obsidian Corduroy Sectional</h4>
+                <p>View in AR</p>
+            </div>
+        </a>
+
+        <a href="ar-view2.html" class="menu-product clickable">
+            <img src="../assets/images/desk-2d.jpg" alt="Walnut and Steel Executive Desk">
+            <div>
+                <h4>Walnut and Steel Executive Desk</h4>
+                <p>View in AR</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="ui-layer control-pad">
+        <div class="empty-cell"></div>
+        <button class="control-btn clickable" id="btn-up">↑</button>
+        <div class="empty-cell"></div>
+        <button class="control-btn clickable" id="btn-left">←</button>
+        <button class="control-btn clickable" id="btn-down">↓</button>
+        <button class="control-btn clickable" id="btn-right">→</button>
+    </div>
+
+    <div class="ui-layer scale-pad">
+        <button class="control-btn clickable" id="btn-plus">+</button>
+        <button class="control-btn clickable" id="btn-minus">-</button>
+    </div>
+
+    <div class="ui-layer cta-container">
+        <button id="open-cart-btn" class="cta-btn clickable">
+            Add to Cart - RM 699
+        </button>
+    </div>
+
+    <div id="cartModal" class="cart-modal-overlay">
+        <div class="cart-modal-content">
+            <h3>Added to Cart!</h3>
+            <p>The Azure Velvet Lounge Chair has been successfully added to your shopping cart.</p>
+            <div class="cart-modal-actions">
+                <button id="close-cart-btn" class="btn-modal-primary">Done</button>
+                <a href="../products.html" class="btn-modal-secondary">Find other products</a>
+            </div>
+        </div>
+    </div>
+
+    <a-scene mindar-image="imageTargetSrc: ../assets/target/chair.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
+        
+        <a-assets>
+            <a-asset-item id="chair-obj" src="../assets/models/chair.glb"></a-asset-item>
+        </a-assets>
+
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+        <a-entity mindar-image-target="targetIndex: 0" mindar-audio-handler>
+
+            <a-entity id="model-wrapper" position="0 0 0" rotation="0 0 0" scale="0.5 0.5 0.5">
+                <a-gltf-model src="#chair-obj"></a-gltf-model>
+            </a-entity>
+
+        </a-entity>
+    </a-scene>
+
+    <script>
+        // Menu Toggle Logic
+        const menu = document.getElementById('side-menu');
+        document.getElementById('open-menu-btn').addEventListener('click', () => menu.classList.add('active'));
+        document.getElementById('close-menu-btn').addEventListener('click', () => menu.classList.remove('active'));
+
+        // --- Cart Modal Logic ---
+        const cartModal = document.getElementById('cartModal');
+        const openCartBtn = document.getElementById('open-cart-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+
+        openCartBtn.addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+
+        closeCartBtn.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        // Control Logic Setup
+        const modelWrapper = document.getElementById('model-wrapper');
+        let currentScale = 0.5;
+        const scaleStep = 0.05;
+        const rotStep = 10;
+
+        document.querySelector('a-scene').addEventListener('loaded', function () {
+            
+            // --- 1. UI BUTTON CONTROLS ---
+            document.getElementById('btn-plus').addEventListener('click', () => {
+                currentScale += scaleStep;
+                modelWrapper.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+            });
+
+            document.getElementById('btn-minus').addEventListener('click', () => {
+                if (currentScale > 0.1) currentScale -= scaleStep;
+                modelWrapper.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+            });
+
+            document.getElementById('btn-left').addEventListener('click', () => {
+                let rot = modelWrapper.getAttribute('rotation');
+                modelWrapper.setAttribute('rotation', {x: rot.x, y: rot.y - rotStep, z: rot.z});
+            });
+
+            document.getElementById('btn-right').addEventListener('click', () => {
+                let rot = modelWrapper.getAttribute('rotation');
+                modelWrapper.setAttribute('rotation', {x: rot.x, y: rot.y + rotStep, z: rot.z});
+            });
+
+            document.getElementById('btn-up').addEventListener('click', () => {
+                let rot = modelWrapper.getAttribute('rotation');
+                modelWrapper.setAttribute('rotation', {x: rot.x - rotStep, y: rot.y, z: rot.z});
+            });
+
+            document.getElementById('btn-down').addEventListener('click', () => {
+                let rot = modelWrapper.getAttribute('rotation');
+                modelWrapper.setAttribute('rotation', {x: rot.x + rotStep, y: rot.y, z: rot.z});
+            });
+
+            const scene = document.getElementById('scene');
+
+            // --- 2. DESKTOP MOUSE CONTROLS ---
+            let isMouseDown = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            scene.addEventListener('wheel', (e) => {
+                if(e.target.closest('.side-menu') || e.target.closest('.cart-modal-content')) return; 
+
+                const scrollDirection = Math.sign(e.deltaY);
+                if (scrollDirection > 0 && currentScale > 0.1) {
+                    currentScale -= scaleStep; 
+                } else if (scrollDirection < 0) {
+                    currentScale += scaleStep; 
+                }
+                modelWrapper.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+            });
+
+            scene.addEventListener('mousedown', (e) => {
+                if(e.target.closest('.clickable') || e.target.closest('.side-menu') || e.target.closest('.cart-modal-content')) return;
+                isMouseDown = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            scene.addEventListener('mousemove', (e) => {
+                if (!isMouseDown) return;
+                if(e.target.closest('.clickable') || e.target.closest('.side-menu') || e.target.closest('.cart-modal-content')) return;
+
+                const deltaX = e.clientX - previousMousePosition.x;
+                const deltaY = e.clientY - previousMousePosition.y;
+
+                let rot = modelWrapper.getAttribute('rotation');
+                
+                // FIXED: Changed minus to plus for deltaY to follow mouse direction
+                modelWrapper.setAttribute('rotation', {
+                    x: rot.x + (deltaY * 0.5), 
+                    y: rot.y + (deltaX * 0.5), 
+                    z: rot.z 
+                });
+                
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            scene.addEventListener('mouseup', () => { isMouseDown = false; });
+            scene.addEventListener('mouseleave', () => { isMouseDown = false; });
+
+
+            // --- 3. MOBILE TOUCH CONTROLS ---
+            let isDragging = false;
+            let previousTouch = null;
+            let initialPinchDistance = null;
+            let startScale = 0.5;
+
+            scene.addEventListener('touchstart', (e) => {
+                if(e.target.closest('.clickable') || e.target.closest('.side-menu') || e.target.closest('.cart-modal-content')) return;
+
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    previousTouch = { x: e.touches[0].pageX, y: e.touches[0].pageY };
+                } else if (e.touches.length === 2) {
+                    isDragging = false;
+                    initialPinchDistance = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    startScale = currentScale;
+                }
+            });
+
+            scene.addEventListener('touchmove', (e) => {
+                if(e.target.closest('.clickable') || e.target.closest('.side-menu') || e.target.closest('.cart-modal-content')) return;
+
+                if (isDragging && e.touches.length === 1 && previousTouch) {
+                    const deltaX = e.touches[0].pageX - previousTouch.x;
+                    const deltaY = e.touches[0].pageY - previousTouch.y;
+
+                    let rot = modelWrapper.getAttribute('rotation');
+                    
+                    // FIXED: Changed minus to plus for deltaY to follow touch direction
+                    modelWrapper.setAttribute('rotation', {
+                        x: rot.x + (deltaY * 0.5), 
+                        y: rot.y + (deltaX * 0.5), 
+                        z: rot.z
+                    });
+                    
+                    previousTouch = { x: e.touches[0].pageX, y: e.touches[0].pageY };
+                } else if (e.touches.length === 2 && initialPinchDistance) {
+                    const currentPinchDistance = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    
+                    const pinchRatio = currentPinchDistance / initialPinchDistance;
+                    currentScale = Math.max(0.1, startScale * pinchRatio);
+                    modelWrapper.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+                }
+            });
+
+            scene.addEventListener('touchend', () => {
+                isDragging = false;
+                previousTouch = null;
+                initialPinchDistance = null;
+            });
+        });
+    </script>
+</body>
+</html>
